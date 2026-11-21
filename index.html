@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STUDY WARRIORS | Learn Today, Lead Tomorrow</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f3f6ff;color:#172554}
+header{background:white;padding:14px 5%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 12px #0001;position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;gap:10px}
+.logoicon{background:#244bd1;color:white;padding:12px;border-radius:13px;font-size:25px}
+.logo h2{font-size:20px;color:#183b91}
+.logo small{color:#64748b}
+button{border:0;border-radius:12px;padding:13px 18px;font-weight:bold;font-size:15px;cursor:pointer}
+.primary{background:#ffbd24;color:#173578}
+.blue{background:#244bd1;color:white}
+.light{background:#e9efff;color:#244bd1}
+.outline{background:white;color:#244bd1;border:2px solid #244bd1}
+main{max-width:1000px;margin:auto;padding:20px}
+.hero{background:linear-gradient(135deg,#142e79,#2862e8);color:white;text-align:center;padding:55px 20px;border-radius:0 0 28px 28px}
+.hero h1{font-size:38px;margin:20px 0}
+.hero h1 span{color:#ffd34f}
+.hero p{line-height:1.7;color:#e4ecff;margin:15px auto;max-width:650px}
+.badge{display:inline-block;background:#ffffff22;padding:10px 18px;border-radius:30px}
+.section{text-align:center;margin:25px 0}
+.section h2{font-size:26px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px}
+.card{background:white;padding:24px 15px;border-radius:18px;text-align:center;box-shadow:0 5px 18px #1b347a12;border:1px solid #e5eaff;cursor:pointer}
+.card:hover{border-color:#426be3;transform:translateY(-2px)}
+.icon{font-size:34px;margin-bottom:12px}
+.card h3{margin-bottom:8px;font-size:18px}
+.card p{font-size:13px;color:#64748b;line-height:1.5}
+.panel{background:white;padding:22px;border-radius:18px;margin:16px 0;box-shadow:0 5px 18px #1b347a12}
+.back{margin-bottom:15px}
+.hidden{display:none!important}
+.info{font-size:14px;color:#64748b;margin:10px 0}
+.question{font-size:20px;line-height:1.6;margin:20px 0}
+.option{display:block;width:100%;text-align:left;background:#f1f5ff;margin:10px 0;color:#172554;border:2px solid transparent}
+.option.correct{background:#dcfce7;border-color:#16a34a;color:#166534}
+.option.wrong{background:#fee2e2;border-color:#dc2626;color:#991b1b}
+.progress{height:9px;background:#e5e7eb;border-radius:20px;margin:15px 0;overflow:hidden}
+.progress div{height:100%;background:#244bd1;width:0}
+.answer{background:#f4f7ff;padding:15px;border-radius:12px;margin:12px 0;line-height:1.6}
+.score{text-align:center;font-size:38px;color:#244bd1;font-weight:bold;margin:20px}
+input,select{padding:13px;border:1px solid #cbd5e1;border-radius:10px;width:100%;margin:10px 0;font-size:16px}
+footer{text-align:center;padding:30px;color:#64748b;font-size:13px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
+.actions button{flex:1}
+@media(max-width:500px){.hero h1{font-size:29px}.hero{padding:40px 15px}.logo h2{font-size:16px}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">
+  <div class="logoicon">🎓</div>
+  <div><h2>STUDY WARRIORS</h2><small>Learn Today, Lead Tomorrow</small></div>
+ </div>
+ <button class="light" onclick="goHome()">⌂</button>
+</header>
+
+<section id="home" class="hero">
+ <div class="badge">📚 FREE LEARNING PLATFORM</div>
+ <h1>STUDY <span>WARRIORS</span></h1>
+ <p id="welcome">Learn Today, Lead Tomorrow. Your learning journey starts here!</p>
+ <button class="primary" onclick="showMedium()">START LEARNING →</button>
+ <br><br>
+ <button class="outline" onclick="showMath()">🧠 Mental Maths</button>
+</section>
+
+<main>
+
+<section id="medium" class="hidden">
+ <div class="section"><h2>Choose Your Medium</h2><p class="info">अपनी पढ़ाई का माध्यम चुनें</p></div>
+ <div class="grid">
+  <div class="card" onclick="chooseMedium('en')"><div class="icon">🇬🇧</div><h3>English Medium</h3><p>Study in English</p></div>
+  <div class="card" onclick="chooseMedium('hi')"><div class="icon">🇮🇳</div><h3>हिंदी माध्यम</h3><p>हिंदी में पढ़ाई करें</p></div>
+ </div>
+</section>
+
+<section id="classes" class="hidden">
+ <button class="light back" onclick="showMedium()">← Back</button>
+ <div class="section"><h2 id="classHeading">Choose Your Class</h2></div>
+ <div class="grid" id="classGrid"></div>
+</section>
+
+<section id="subjects" class="hidden">
+ <button class="light back" onclick="showClasses()">← Back</button>
+ <div class="section"><h2 id="subjectHeading">Choose Subject</h2></div>
+ <div class="grid" id="subjectGrid"></div>
+</section>
+
+<section id="chapters" class="hidden">
+ <button class="light back" onclick="showSubjects()">← Back</button>
+ <div class="section"><h2 id="chapterHeading">Choose Chapter</h2></div>
+ <div class="grid" id="chapterGrid"></div>
+</section>
+
+<section id="chapterMenu" class="hidden">
+ <button class="light back" onclick="showChapters()">← Back</button>
+ <div class="panel">
+  <div class="section"><h2 id="menuHeading"></h2></div>
+  <div class="grid">
+   <div class="card" onclick="startQuiz()"><div class="icon">📝</div><h3 id="mcqLabel">Objective MCQ</h3><p id="mcqInfo">Practice questions</p></div>
+   <div class="card" onclick="showImportant()"><div class="icon">📖</div><h3 id="importantLabel">Important Questions</h3><p id="importantInfo">Questions and answers</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="important" class="hidden">
+ <button class="light back" onclick="showChapterMenu()">← Back</button>
+ <div class="section"><h2 id="importantHeading">Important Questions & Answers</h2></div>
+ <div id="importantList"></div>
+</section>
+
+<section id="quiz" class="hidden">
+ <button class="light back" onclick="showChapterMenu()">← Back</button>
+ <div class="panel">
+  <h2 id="quizHeading">MCQ Practice</h2>
+  <p id="quizCount" class="info"></p>
+  <div class="progress"><div id="bar"></div></div>
+  <p id="number" class="info"></p>
+  <div id="qtext" class="question"></div>
+  <div id="options"></div>
+  <p id="feedback" class="info"></p>
+  <button id="next" class="blue hidden" onclick="nextQuestion()">Next →</button>
+ </div>
+</section>
+
+<section id="result" class="hidden">
+ <div class="panel">
+  <div class="section"><h2 id="resultHeading">Quiz Completed!</h2></div>
+  <div class="score" id="score"></div>
+  <p id="details" style="text-align:center;line-height:2"></p>
+  <div class="actions">
+   <button class="blue" onclick="startQuiz()" id="retry">Try Again</button>
+   <button class="light" onclick="goHome()" id="homeButton">Home</button>
+  </div>
+ </div>
+</section>
+
+<section id="math" class="hidden">
+ <button class="light back" onclick="goHome()">← Home</button>
+ <div class="panel">
+  <h2 id="mathHeading">🧠 Mental Maths</h2>
+  <p class="info" id="mathInfo">Choose difficulty and solve.</p>
+  <select id="level">
+   <option value="easy">Easy</option>
+   <option value="medium">Medium</option>
+   <option value="hard">Hard</option>
+  </select>
+  <button class="blue" onclick="newMath()" id="startMath">Start / New Question</button>
+  <div class="question" id="mathQuestion">Press Start</div>
+  <input id="mathAnswer" type="number" placeholder="Your answer">
+  <button class="primary" onclick="checkMath()" id="checkMath">Check Answer</button>
+  <p id="mathFeedback" class="info"></p>
+ </div>
+</section>
+
+</main>
+<footer>
+ <b>STUDY WARRIORS</b><br>
+ Learn Today, Lead Tomorrow.<br>
+ Free Learning Platform
+</footer>
+
+<script>
+const T={
+en:{
+welcome:"Learn Today, Lead Tomorrow. Your learning journey starts here!",
+medium:"Choose Your Medium",classes:"Choose Your Class",subjects:"Choose Subject",chapters:"Choose Chapter",
+back:"← Back",mcq:"Objective MCQ",important:"Important Questions",practice:"Practice questions",
+qa:"Questions and answers",quiz:"MCQ Practice",next:"Next →",result:"Quiz Completed!",
+retry:"Try Again",home:"Home",correct:"Correct Answers",wrong:"Wrong Answers",
+accuracy:"Accuracy",math:"🧠 Mental Maths",mathInfo:"Choose difficulty and solve.",
+start:"Start / New Question",check:"Check Answer",yourAnswer:"Your answer",
+correctMsg:"✓ Correct answer! Well done.",wrongMsg:"✗ Not quite. Correct answer: ",
+select:"Select",classesNames:["Class 8","Class 9","Class 10"],
+subjectsNames:["Mathematics","Science","English","Hindi","Social Science"],
+chaptersNames:["Number System","Algebra","Geometry","Mensuration","Statistics"]
+},
+hi:{
+welcome:"आज सीखें, कल आगे बढ़ें। आपकी पढ़ाई का सफर यहाँ से शुरू होता है!",
+medium:"अपना माध्यम चुनें",classes:"अपनी कक्षा चुनें",subjects:"विषय चुनें",chapters:"अध्याय चुनें",
+back:"← वापस",mcq:"वस्तुनिष्ठ प्रश्न",important:"महत्वपूर्ण प्रश्न",practice:"अभ्यास प्रश्न",
+qa:"प्रश्न और उत्तर",quiz:"MCQ अभ्यास",next:"अगला प्रश्न →",result:"टेस्ट पूरा हुआ!",
+retry:"फिर से प्रयास करें",home:"होम",correct:"सही उत्तर",wrong:"गलत उत्तर",
+accuracy:"सटीकता",math:"🧠 मानसिक गणित",mathInfo:"कठिनाई चुनें और सवाल हल करें।",
+start:"शुरू करें / नया सवाल",check:"उत्तर जाँचें",yourAnswer:"अपना उत्तर",
+correctMsg:"✓ सही जवाब! बहुत अच्छा।",wrongMsg:"✗ सही उत्तर है: ",
+select:"चुनें",classesNames:["कक्षा 8","कक्षा 9","कक्षा 10"],
+subjectsNames:["गणित","विज्ञान","अंग्रेजी","हिंदी","सामाजिक विज्ञान"],
+chaptersNames:["संख्या पद्धति","बीजगणित","ज्यामिति","क्षेत्रमिति","सांख्यिकी"]
+}
+};
+
+let lang="en",cls=8,subject="",chapter="",questions=[],index=0,right=0,wrong=0,answered=false,mathResult=0;
+const $=id=>document.getElementById(id);
+const screens=["home","medium","classes","subjects","chapters","chapterMenu","important","quiz","result","math"];
+function show(id){screens.forEach(s=>$(s).classList.add("hidden"));$(id).classList.remove("hidden");window.scrollTo(0,0)}
+function goHome(){show("home")}
+function showMedium(){show("medium");$("welcome").innerText=T[lang].welcome}
+function chooseMedium(v){lang=v;showClasses()}
+function showClasses(){
+show("classes");$("classHeading").innerText=T[lang].classes;
+$("classGrid").innerHTML="";
+T[lang].classesNames.forEach((name,i)=>addCard("classGrid","📘",name,"",()=>{cls=i+8;showSubjects()}));
+}
+function addCard(id,icon,title,desc,fn){
+let d=document.createElement("div");d.className="card";
+let a=document.createElement("div");a.className="icon";a.innerText=icon;
+let h=document.createElement("h3");h.innerText=title;
+let p=document.createElement("p");p.innerText=desc;
+d.append(a,h,p);d.onclick=fn;$(id).appendChild(d);
+}
+function showSubjects(){
+show("subjects");$("subjectHeading").innerText=T[lang].subjects;
+$("subjectGrid").innerHTML="";
+T[lang].subjectsNames.forEach((s,i)=>addCard("subjectGrid","📚",s,"",()=>{subject=s;showChapters()}));
+}
+function showChapters(){
+show("chapters");$("chapterHeading").innerText=T[lang].chapters;
+$("chapterGrid").innerHTML="";
+T[lang].chaptersNames.forEach((c,i)=>addCard("chapterGrid","📖",c,"",()=>{chapter=c;showChapterMenu()}));
+}
+function showChapterMenu(){
+show("chapterMenu");$("menuHeading").innerText=chapter;
+$("mcqLabel").innerText=T[lang].mcq;$("importantLabel").innerText=T[lang].important;
+$("mcqInfo").innerText=T[lang].practice;$("importantInfo").innerText=T[lang].qa;
+}
+const bank={
+"en":{
+"Mathematics":{
+"Number System":[
+["What is the smallest natural number?",["0","1","-1","2"],1,"1 is the smallest natural number in the usual school convention."],
+["What is 12 × 5?",["50","55","60","65"],2,"12 × 5 = 60."],
+["What is the square of 9?",["18","72","81","99"],2,"9 × 9 = 81."]
+],
+"Algebra":[
+["If x + 5 = 12, what is x?",["5","6","7","8"],2,"x = 12 - 5 = 7."]
+]},
+"Science":{
+"Physics":[
+["What is the SI unit of force?",["Joule","Newton","Watt","Pascal"],1,"The SI unit of force is Newton."],
+["Which instrument measures temperature?",["Barometer","Thermometer","Ammeter","Voltmeter"],1,"A thermometer measures temperature."]
+],
+"Chemistry":[["What is the chemical formula of water?",["CO2","O2","H2O","NaCl"],2,"Water is H2O."]],
+"Biology":[["Which part of a plant prepares food?",["Root","Leaf","Stem","Flower"],1,"Leaves prepare food by photosynthesis."]]
+},
+"हिंदी":{
+"संख्या पद्धति":[["12 × 5 का मान क्या है?",["50","55","60","65"],2,"12 × 5 = 60।"]]
+}
+},
+"hi":{
+"गणित":{
+"संख्या पद्धति":[["सबसे छोटी प्राकृतिक संख्या कौन-सी है?",["0","1","-1","2"],1,"सामान्य स्कूली परिभाषा में सबसे छोटी प्राकृतिक संख्या 1 है।"],["12 × 5 कितना होगा?",["50","55","60","65"],2,"12 × 5 = 60।"]],
+"बीजगणित":[["यदि x + 5 = 12 है, तो x का मान क्या है?",["5","6","7","8"],2,"x = 12 - 5 = 7।"]]
+},
+"विज्ञान":{
+"भौतिकी":[["बल का SI मात्रक क्या है?",["जूल","न्यूटन","वाट","पास्कल"],1,"बल का SI मात्रक न्यूटन है।"]],
+"रसायन विज्ञान":[["पानी का रासायनिक सूत्र क्या है?",["CO2","O2","H2O","NaCl"],2,"पानी का सूत्र H2O है।"]],
+"जीव विज्ञान":[["पौधे का कौन-सा भाग भोजन बनाता है?",["जड़","पत्ती","तना","फूल"],1,"पत्तियाँ प्रकाश संश्लेषण से भोजन बनाती हैं।"]]
+}
+}
+};
+function getQuestions(){
+let b=bank[lang]||{},s=b[subject]||{},q=s[chapter];
+if(q)return q;
+return [[lang==="hi"?"इस अध्याय के प्रश्न जल्द जोड़े जाएँगे।":"Questions for this chapter will be added soon.",lang==="hi"?["ठीक है","अगला","वापस","होम"]:["Okay","Next","Back","Home"],0,lang==="hi"?"यह नमूना प्रश्न है।":"This is a sample placeholder question."]];
+}
+function startQuiz(){
+questions=getQuestions();index=0;right=0;wrong=0;show("quiz");
+$("quizHeading").innerText=chapter+" - "+T[lang].quiz;
+$("quizCount").innerText=questions.length+" questions";renderQuestion();
+}
+function renderQuestion(){
+answered=false;let q=questions[index];
+$("number").innerText=(lang==="hi"?"प्रश्न ":"Question ")+(index+1)+" / "+questions.length;
+$("bar").style.width=(index/questions.length*100)+"%";
+$("qtext").innerText=q[0];$("feedback").innerText="";$("next").classList.add("hidden");
+$("next").innerText=index===questions.length-1?T[lang].result:T[lang].next;
+$("options").innerHTML="";
+q[1].forEach((op,i)=>{
+let b=document.createElement("button");b.className="option";
+b.innerText=String.fromCharCode(65+i)+". "+op;b.onclick=()=>answer(i);$("options").appendChild(b);
+});
+}
+function answer(i){
+if(answered)return;answered=true;
+let q=questions[index],buttons=document.querySelectorAll(".option");
+buttons[q[2]].classList.add("correct");
+if(i===q[2]){right++;$("feedback").innerText="✓ "+(lang==="hi"?"सही उत्तर! ":"Correct! ")+q[3]}
+else{wrong++;buttons[i].classList.add("wrong");$("feedback").innerText="✗ "+(lang==="hi"?"गलत। ":"Incorrect. ")+q[3]}
+$("next").classList.remove("hidden");
+}
+function nextQuestion(){
+if(!answered)return;index++;
+if(index<questions.length)renderQuestion();else showResult();
+}
+function showResult(){
+show("result");$("resultHeading").innerText=T[lang].result;
+$("score").innerText=right+" / "+questions.length;
+$("details").innerText=T[lang].correct+": "+right+" | "+T[lang].wrong+": "+wrong+" | "+T[lang].accuracy+": "+Math.round(right/questions.length*100)+"%";
+$("retry").innerText=T[lang].retry;$("homeButton").innerText=T[lang].home;
+}
+function showImportant(){
+show("important");$("importantHeading").innerText=T[lang].important;
+$("importantList").innerHTML="";
+let p=document.createElement("div");p.className="panel";
+p.innerText=lang==="hi"?"इस अध्याय के महत्वपूर्ण प्रश्न और उत्तर पाठ्यक्रम के अनुसार यहाँ जोड़े जाएँगे।":"Important questions and answers for this chapter will be added here according to the syllabus.";
+$("importantList").appendChild(p);
+}
+function showMath(){
+show("math");$("mathHeading").innerText=T[lang].math;
+$("mathInfo").innerText=T[lang].mathInfo;$("startMath").innerText=T[lang].start;
+$("checkMath").innerText=T[lang].check;$("mathAnswer").placeholder=T[lang].yourAnswer;
+}
+function newMath(){
+let level=$("level").value,a,b,op;
+if(level==="easy"){a=1+Math.floor(Math.random()*20);b=1+Math.floor(Math.random()*10)}
+else if(level==="medium"){a=10+Math.floor(Math.random()*90);b=1+Math.floor(Math.random()*30)}
+else{a=100+Math.floor(Math.random()*400);b=10+Math.floor(Math.random()*90)}
+op=["+","-","×"][Math.floor(Math.random()*3)];
+if(op==="+")mathResult=a+b;
+if(op==="-"){if(b>a)[a,b]=[b,a];mathResult=a-b}
+if(op==="×")mathResult=a*b;
+$("mathQuestion").innerText=a+" "+op+" "+b+" = ?";
+$("mathAnswer").value="";$("mathFeedback").innerText="";
+}
+function checkMath(){
+if($("mathAnswer").value===""){ $("mathFeedback").innerText=lang==="hi"?"पहले उत्तर लिखें।":"Enter your answer first.";return}
+$("mathFeedback").innerText=Number($("mathAnswer").value)===mathResult?T[lang].correctMsg:T[lang].wrongMsg+mathResult;
+}
+</script>
+</body>
+</html>
